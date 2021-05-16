@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ec.edu.ups.servlets;
+package ec.edu.ups.filtro;
 
 /**
  * @author Gabriel Leonardo Chu
