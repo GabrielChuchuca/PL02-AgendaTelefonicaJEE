@@ -34,7 +34,7 @@ public class Usuario implements Serializable {
 	 */
 	public Usuario(String cedula, String nombre, String apellido, String correo, String contrasenia,
 			List<Telefono> listaTelefono) {
-		//super();
+		super();
 		this.cedula = cedula;
 		this.nombre = nombre;
 		this.apellido = apellido;

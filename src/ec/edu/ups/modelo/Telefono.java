@@ -18,7 +18,7 @@ public class Telefono implements Serializable{
 	private String operadora;
 	private Usuario usuario;
 	
-	public void Telefono() {
+	public Telefono() {
 		
 	}
 
@@ -30,6 +30,7 @@ public class Telefono implements Serializable{
 	 * @param usuario
 	 */
 	public Telefono(int codigo, String numero, String tipo, String operadora, Usuario usuario) {
+		super();
 		this.codigo = codigo;
 		this.numero = numero;
 		this.tipo = tipo;

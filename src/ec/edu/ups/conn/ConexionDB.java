@@ -52,7 +52,7 @@ public class ConexionDB {
 		try {
 			return this.statement.executeQuery(sql);
 		} catch (SQLException e) {
-			System.out.println(">>>WARNING (JDBC:query): ---" + sql + "---" + e);
+			System.out.println(">>>WARNING (JDBC:query): --- " + sql + " ---" + e);
 		}
 		return null;
 	}
@@ -68,7 +68,7 @@ public class ConexionDB {
 			this.statement.executeUpdate(sql);
 			return true;
 		} catch (SQLException e) {
-			System.out.println(">>>WARNING (JDBC:update)... actualizacion: ---" + sql + "---" + e);
+			System.out.println(">>>WARNING (JDBC:update)... actualizacion: --- " + sql + " ---" + e);
 			return false;
 		}
 	}

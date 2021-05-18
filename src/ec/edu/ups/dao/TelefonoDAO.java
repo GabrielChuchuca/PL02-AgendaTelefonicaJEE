@@ -9,6 +9,6 @@ import ec.edu.ups.modelo.Telefono;
  * @author Gabriel Leonardo Chu
  *
  */
-public interface TelefonoDAO extends GenericDAO<Telefono, String> {
+public interface TelefonoDAO extends GenericDAO<Telefono, Integer> {
 
 }

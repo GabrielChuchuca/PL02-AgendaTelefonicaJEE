@@ -9,6 +9,6 @@ import ec.edu.ups.modelo.Usuario;
  * @author Gabriel Leonardo Chu
  *
  */
-public interface UsuarioDAO extends GenericDAO<Usuario, Integer>{
+public interface UsuarioDAO extends GenericDAO<Usuario, String>{
 
 }

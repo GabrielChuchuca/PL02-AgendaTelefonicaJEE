@@ -16,7 +16,7 @@ import ec.edu.ups.modelo.Usuario;
  * @author Gabriel Leonardo Chu
  *
  */
-public class JDBCUsuarioDAO extends JDBCGenericDAO<Usuario, Integer> implements UsuarioDAO{
+public class JDBCUsuarioDAO extends JDBCGenericDAO<Usuario, String> implements UsuarioDAO{
 	@Override
 	public void createTable() {
 		//jdbc.update("DROP TABLE IF EXISTS Usuario");
@@ -32,13 +32,13 @@ public class JDBCUsuarioDAO extends JDBCGenericDAO<Usuario, Integer> implements 
 	}
 
 	@Override
-	public Usuario read(Integer cedula) {
+	public Usuario read(String cedula) {
 		// TODO Auto-generated method stub
 		Usuario usuario = null;
 		ResultSet rs = jdbc.query("SELECT * FROM Usuario WHERE cedula = '" + cedula + "'");
 		try {
-			if(rs != null && rs.next()) {
-				usuario = new Usuario(rs.getString("cedula"), rs.getString("nombre"), rs.getString("apellido"), rs.getString("correo"), rs.getString("contrasena"), null);
+			while(rs.next()) {
+				usuario = new Usuario(rs.getString("cedula"), rs.getString("nombre"), rs.getString("apellido"), rs.getString("correo"), rs.getString("contrasenia"), null);
 			}
 		} catch (SQLException e) {
 			// TODO: handle exception
@@ -54,13 +54,10 @@ public class JDBCUsuarioDAO extends JDBCGenericDAO<Usuario, Integer> implements 
 		ResultSet rs = jdbc.query("SELECT * FROM Usuario where correo = '" + usuario.getCorreo()
 									+ "' and contrasenia = '" + usuario.getContrasenia() + "'");
 		try {
-			while(rs.next()) {
-				usu = new Usuario();
-				usu.setCedula(rs.getString("cedula"));
-				usu.setNombre(rs.getString("nombre"));
-				usu.setApellido(rs.getString("apellido"));
-				usu.setCorreo(rs.getString("correo"));
-				usu.setContrasenia(rs.getString("contrasenia"));
+			if (rs != null && rs.next()) {
+				usu = new Usuario(rs.getString("cedula"), rs.getString("nombre"), rs.getString("apellido"),
+						rs.getString("correo"), rs.getString("contrasenia"), null);
+				System.out.println("Usuario Logeado" + usu.toString());
 			}
 		} catch (Exception e) {
 			// TODO: handle exception

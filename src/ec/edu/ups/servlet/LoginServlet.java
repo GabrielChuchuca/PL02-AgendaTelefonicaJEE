@@ -43,7 +43,39 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		String correo = request.getParameter("correo");
+		String contra = request.getParameter("contrasenia");
+		
+		usuario.setCorreo(correo);
+		usuario.setContrasenia(contra);
+		
+		System.out.println("VALORES PASADOS DES >" + usuario.toString());
+		
+		Usuario u = usuarioDAO.loginUser(usuario);
+		if(u != null) {
+			HttpSession session = request.getSession(true);
+			session.setAttribute("usuario", usuario.getNombre());
+			session.setAttribute("cedula", usuario.getCedula());
+			System.out.println("sesion TRUE");
+			
+			request.getSession(true).setAttribute("usuario", u.getNombre() + u.getApellido());
+			request.getSession(true).setAttribute("cedula", u.getCedula());
+			request.setAttribute("peticion", "Conectado..");
+
+			
+			RequestDispatcher rs = getServletContext().getRequestDispatcher("/pagina.jsp");
+			rs.forward(request, response);
+			
+			//response.sendRedirect("index.jsp");
+			//System.out.println("Usuario Correcto " + u);
+		}else {
+			HttpSession session = request.getSession(false);
+			System.out.println("sesion FALSE");
+			RequestDispatcher rs = getServletContext().getRequestDispatcher("/login.jsp");
+			rs.forward(request, response);
+			//response.sendRedirect("pagina.jsp");
+			//System.out.println("Usuario o Contraseña Incorrecta " + u);
+		}
 	}
 	
 	/**
@@ -61,17 +93,20 @@ public class LoginServlet extends HttpServlet {
 		Usuario u = usuarioDAO.loginUser(usuario);
 		
 		if(u.getCorreo() != null && u.getContrasenia() != null) {
-			HttpSession session = request.getSession();
-			session.setAttribute("user", u);
-			RequestDispatcher rs = getServletContext().getRequestDispatcher("/index.jsp");
+			HttpSession session = request.getSession(true);
+			session.setAttribute("usuario", u);
+			//session.setAttribute("cedula", usuario.getCedula());
+			System.out.println("sesion TRUE " + u);
+			//response.sendRedirect("pagina.jsp");
+			RequestDispatcher rs = getServletContext().getRequestDispatcher("/pagina.jsp");
 			rs.forward(request, response);
 			
 			//response.sendRedirect("index.jsp");
 			//System.out.println("Usuario Correcto " + u);
 		}else {
-			HttpSession session = request.getSession();
-			session.setAttribute("invalidMsg", "Correo o Contraseña Incorrectos");
-			RequestDispatcher rs = getServletContext().getRequestDispatcher("/pagina.jsp");
+			HttpSession session = request.getSession(false);
+			System.out.println("sesion FALSE");
+			RequestDispatcher rs = getServletContext().getRequestDispatcher("/login.jsp");
 			rs.forward(request, response);
 			//response.sendRedirect("pagina.jsp");
 			//System.out.println("Usuario o Contraseña Incorrecta " + u);

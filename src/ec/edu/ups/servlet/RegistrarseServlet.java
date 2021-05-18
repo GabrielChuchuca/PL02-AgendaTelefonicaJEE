@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import ec.edu.ups.dao.DAOFactory;
 import ec.edu.ups.dao.UsuarioDAO;
@@ -28,6 +29,7 @@ public class RegistrarseServlet extends HttpServlet{
 	private Usuario usuario;
 	
 	public RegistrarseServlet() {
+		//super();
 		usuarioDao = DAOFactory.getFactory().getUsuarioDAO();
 		usuario = new Usuario();
 	}
@@ -42,6 +44,7 @@ public class RegistrarseServlet extends HttpServlet{
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String url = null;
+		HttpSession session = request.getSession();
 		try {
 			usuario.setCedula(request.getParameter("cedula"));
 			usuario.setNombre(request.getParameter("nombre"));
@@ -51,9 +54,13 @@ public class RegistrarseServlet extends HttpServlet{
 			usuarioDao.create(usuario);
 			System.out.println("Registro: " + usuario.getCedula() + " " + usuario.getNombre() + " " + 
 					usuario.getApellido() + " " + usuario.getCorreo() + " " + usuario.getContrasenia());
-			url = "/index.jsp";
+			
+			session.setAttribute("sucssMsg", "Usuario registrado de manera exitosa.");
+			url = "/login.jsp";
+			
 		}catch (Exception e) {
 			// TODO: handle exception
+			session.setAttribute("errorMsg", "Error en el servidor...");
 			url = "/Error.jsp";
 		}
 		getServletContext().getRequestDispatcher(url).forward(request, response);

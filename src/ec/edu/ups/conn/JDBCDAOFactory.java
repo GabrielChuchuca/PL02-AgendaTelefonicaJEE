@@ -14,7 +14,7 @@ import ec.edu.ups.dao.UsuarioDAO;
 public class JDBCDAOFactory extends DAOFactory {
 	@Override
 	public void createTables() {
-		this.getUsuarioDAO().createTable();
+		//this.getUsuarioDAO().createTable();
 		//this.getTelefonoDAO().createTable();
 	}
 	
@@ -26,8 +26,8 @@ public class JDBCDAOFactory extends DAOFactory {
 	@Override
 	public TelefonoDAO getTelefonoDAO() {
 		// TODO Auto-generated method stub
-		//return new JDBCTelefonoDAO();
-		return null;
+		return new JDBCTelefonoDAO();
+		//return null;
 	
 	}
 
